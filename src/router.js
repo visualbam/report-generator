@@ -1,21 +1,27 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import About from './views/About.vue';
+import BarGraph from './components/BarGraph';
+import ColumnChart from './components/ColumnChart';
+import ScatterPlot from './components/ScatterPlot';
 
 Vue.use(Router);
 
 export default new Router({
     routes: [
         {
-            path: '/',
-            name: 'home',
-            component: Home,
+            path: '/bar-graph',
+            name: 'bar-graph',
+            component: BarGraph,
         },
         {
-            path: '/about',
-            name: 'about',
-            component: About,
+            path: '/column-chart',
+            name: 'column-chart',
+            component: ColumnChart,
+        },
+        {
+            path: '/scatter-plot',
+            name: 'scatter-plot',
+            component: ScatterPlot,
         },
     ],
 });

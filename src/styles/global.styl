@@ -1,0 +1,357 @@
+@media print {
+    body {-webkit-print-color-adjust: exact;}
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/*
+Fonts
+-------------------------------------------------------*/
+body, ul li, span {
+    font-size: 9pt;
+    line-height: 13pt;
+    font-family: 'Fi360 Sans Tabular', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, span, li, img, div {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 16pt;
+    line-height: 10pt;
+}
+
+h2 {
+    text-transform: uppercase;
+    padding: 8px 0 9px;
+    border-bottom: 1pt solid #000;
+    font-size: 9pt;
+}
+
+h3 {
+    padding: 0 0 9px;
+    text-transform: uppercase;
+    border-bottom: 1pt solid #000;
+    font-size: 9pt;
+}
+
+h4 {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: 9pt;
+}
+
+h4:first-child {
+    margin-top: 8px;
+}
+
+/*
+Page breaks
+-------------------------------------------------------*/
+.base--report-section {
+    page-break-after: always;
+}
+
+h3 {
+    page-break-after: avoid;
+}
+
+table {
+    page-break-inside: avoid;
+}
+
+
+/* Lists
+-----------------*/
+ol { counter-reset: item; margin: 0; padding: 0; }
+ol ol { counter-reset: listStyle; list-style-type: lower-alpha; margin: 0; padding: 0; }
+
+ol li {
+    display: block;
+    padding-left: 20px;
+    position: relative;
+    margin: 10px 0;
+}
+
+ol li:before {
+    content: counter(item) ".";
+    counter-increment: item;
+    position: absolute;
+    font-weight: bold;
+    left: 0;
+}
+
+ol li p {
+    display: inline;
+}
+
+ol ol li:before {
+    content: counter(listStyle, lower-alpha) ".";
+    counter-increment: listStyle;
+    position: absolute;
+    font-weight: bold;
+    left: 0;
+}
+
+ul {
+    margin: 5px 0px 5px -10px;
+    padding: 0;
+}
+
+ul li {
+    padding-left: 0px;
+    list-style: none;
+    margin: 0px 0px 10px 20px;
+}
+
+ul li strong {
+    margin-left: -10px;
+    font-weight: bold;
+}
+
+ul li img {
+    margin-right: 10px;
+    width: 7px;
+    height: 5px;
+    top: -1px;
+    position: relative;
+}
+
+.textIndented {
+    padding-left: 8px;
+    text-indent: -8px;
+}
+
+/*
+Table
+---------------------------------------------------*/
+table {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+    line-height: 1;
+    font-family: 'Fi360 Sans Tabular';
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+table thead {
+    line-height: 1.25;
+}
+
+table tbody td {
+    font-size: 9pt;
+    background-color: #edecec;
+}
+
+table thead th,
+table tbody td,
+table tfoot td  {
+    border: 1px solid #fff;
+    padding: 4px;
+    text-align: center;
+    width: auto;
+}
+
+table thead th, table tfoot td {
+    text-transform: uppercase;
+    font-size: 7pt;
+    font-family: 'Fi360 Sans Tabular';
+    font-weight: 700;
+    vertical-align: bottom;
+    box-sizing: border-box;
+    background-color: #c9c7c7;
+}
+
+caption {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 9pt;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+/*
+Table Utility
+---------------------------------------------------*/
+.base--color-column {
+    width: 4px;
+    padding: 0;
+}
+
+.base--main-column {
+    width: 100%;
+    text-align: left;
+}
+
+td.base--main-column {
+    font-weight: 500;
+}
+
+.base--main-column ~ th {
+    width: 45px;
+}
+
+.base--double-header {
+    /* We need important to override the base table column width */
+    width: 100%!important;
+}
+
+/* If you need more space in the double header, target the rowspan */
+.base--double-header[colspan="6"] {
+    width: 125%!important;
+}
+.base--double-header[colspan="2"] {
+    width: 60%!important;
+}
+
+.base--featured-column {
+    background: #e0dfdf;
+}
+
+.base--money-column {
+    text-align: right;
+}
+
+.base--bold-column {
+    font-weight: bold;
+}
+
+.base--table-total-row td {
+    background-color: #c9c7c7;
+    font-weight: bold;
+}
+
+caption .split-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+caption .split-header span:last-child {
+    color: #aaaaaa;
+}
+
+
+/*
+Utility
+-------------------------------------------------------*/
+pre {
+    background: #333;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: auto;
+    padding: 1.5rem;
+    margin: 50px auto;
+    border-radius: 5px;
+    border: 5px solid #292929;
+    position: relative;
+    color: #ffa726;
+    z-index: 5;
+}
+
+.hide-data {
+    /* sometimes we want to remove the element from the dom to hide data */
+    position: fixed;
+}
+
+.two-column-layout {
+    column-count: 2;
+    column-gap: 25px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bottom-border {
+    padding-bottom: 10px;
+    border-bottom: 1pt solid #000;
+}
+
+.capitalized {
+    text-transform: capitalize;
+}
+
+/*
+Charts & Tables
+-------------------------------------------------------*/
+.base--pie-chart-and-table {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 0;
+}
+
+.base--pie-chart-and-table div {
+    padding-left: 5px;
+}
+
+.base--pie-chart-and-table table {
+    width: 100%;
+}
+
+/*
+Section Blocks
+-------------------------------------------------------*/
+.base--section-blocks {
+    display: flex;
+    flex-direction: row;
+}
+
+.base--block div {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    width: 230px;
+    text-align: center;
+}
+
+.base--section-blocks .base--block-description {
+    text-transform: uppercase;
+    font-size: 10.5pt;
+    font-weight: bold;
+    line-height: 12pt;
+}
+
+.base--section-blocks .base--block-value {
+    font-size: 25pt;
+    font-weight: 300;
+    padding-top: 25px;
+    justify-content: center;
+}
+
+/*
+Section Blocks
+-------------------------------------------------------*/
+.base--factsheet {
+    display: flex;
+}
+
+.base--factsheet .column-one {
+    flex: 2 0 0;
+    margin-right: 20px;
+}
+
+.base--factsheet .column-two {
+    flex: 1 0 0;
+}
