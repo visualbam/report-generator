@@ -1,30 +1,21 @@
-export const growthData = [
-    {
-        InvestmentType: 'Model',
-        Color: "#F37777",
-        maxYear: '2011',
-        Quarter: 2.96,
-        YearToDate: 7.25,
-        OneYearReturn: 11.63,
-        ThreeYearReturn: 5.49,
-        FiveYearReturn: 7.65,
-        TenYearReturn: null,
-    },
-    {
-        InvestmentType: '+/- Peer Group Benchmark',
-        Color: "#F37777",
-        Quarter: -0.45,
-        YearToDate: -1.01,
-        OneYearReturn: -1.31,
-        ThreeYearReturn: -1.31,
-        FiveYearReturn: -1.31,
-        TenYearReturn: null,
-    },
-    {
-        investmentMonthData: {
-            Amount: 12,
-            MonthEndDate: 12321321
-        }
-    }
-];
+const growthValues = [];
 
+generateGrowthValues('Model');
+generateGrowthValues('+/- Peer Group Benchmark');
+
+export const growthData = growthValues;
+
+function generateGrowthValues(type) {
+    let randomWholeNum = Math.floor(Math.random() * 65);
+    let yearValue = 2001;
+
+    for (let x = 0; x < 10; x++) {
+        growthValues.push({
+            amount: randomWholeNum += 1800,
+            investmentType: type,
+            year: new Date(yearValue++, 0, 0).getFullYear(),
+        });
+    }
+
+    return growthValues;
+}

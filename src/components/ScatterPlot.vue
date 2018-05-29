@@ -143,12 +143,12 @@
                 // enter()
                 this.append('g')
                     .call(params.gridLines.y)
-                    .classed('gridline', true);
+                    .classed('grid-line', true);
 
                 this.append('g')
                     .attr('transform', `translate(0, ${height})`)
                     .call(params.gridLines.x)
-                    .classed('gridline', true);
+                    .classed('grid-line', true);
 
                 this.selectAll('.point')
                     .data(params.data)

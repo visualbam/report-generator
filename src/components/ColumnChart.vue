@@ -66,12 +66,12 @@
 
             // Grid Lines
             g.append("g")
-                .attr('class', 'gridline')
+                .attr('class', 'grid-line')
                 .attr('transform', 'translate(0,' + height + ')')
                 .call(d3.axisBottom(x).tickSize(-height).tickFormat(''));
 
             g.append('g')
-                .attr('class', 'gridline')
+                .attr('class', 'grid-line')
                 .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
 
             // Bars

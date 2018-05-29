@@ -118,13 +118,13 @@
                 // Append group tp svg
                 this.append('g')
                     .call(params.gridLines.y)
-                    .classed('gridline', true);
+                    .classed('grid-line', true);
 
                 // X axis gridlines need to be translated
                 this.append('g')
                     .attr('transform', 'translate(0,' + height + ')')
                     .call(params.gridLines.x)
-                    .classed('gridline', true);
+                    .classed('grid-line', true);
 
                 // Create bars
                 this.selectAll('.bar')
