@@ -27,7 +27,7 @@
             let height = h - margin.top - margin.bottom;
 
             // Get Domain Range Values
-            let xDomain = d3.extent(data, d => new Date(d.year, 0, 1));
+            let xDomain = d3.extent(data, d => new Date().setUTCFullYear(d.year));
             let yDomain = d3.extent(data, d => d.amount);
 
             // Create Chart Scale --------------------------------------------------------------------------------------
@@ -40,12 +40,12 @@
                 .range([height, 0]);
 
             let area = d3.area()
-                .x(d => xScale(d.year))
-                .y0(yScale(0))
+                .x(d => xScale(new Date().setUTCFullYear(d.year)))
+                .y0(height)
                 .y1(d => yScale(d.amount));
 
             let line = d3.line()
-                .x(d => xScale(d.year))
+                .x(d => xScale(new Date().setUTCFullYear(d.year)))
                 .y(d => yScale(d.amount));
 
             // SVG Creation --------------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@
                 .tickSize(-height, 0, 0)
                 .tickFormat('');
 
-            console.log(data);
+            console.log(JSON.stringify(data));
 
             // Plot Chart ----------------------------------------------------------------------------------------------
             plot.call(chart, {
@@ -92,6 +92,7 @@
             });
 
             function plot(params) {
+                // Build Chart -----------------------------------------------------------------------------------------
                 this.append('g')
                     .call(params.gridLines.y)
                     .classed('grid-line', true);
@@ -112,7 +113,14 @@
                     .classed('heavy', true)
                     .call(params.axis.y);
 
+                // Add visual elements to chart ------------------------------------------------------------------------
                 // enter()
+                this.selectAll('.area')
+                    .data([params.data])
+                    .enter()
+                    .append('path')
+                    .classed('area', true);
+
                 this.selectAll('.poop-line')
                     .data([params.data])
                     .enter()
@@ -120,13 +128,23 @@
                         .classed('poop-line', true);
 
                 // update
+                this.selectAll('.area')
+                    .attr('d', d => area(d))
+                    .attr('fill', '#80B3E1')
+                    .attr('opacity', 0.75);
+
                 this.selectAll('.poop-line')
                     .attr('d', d => line(d))
                     .attr('fill', 'none')
-                    .attr('stroke', 'red')
-                    .attr('stroke-width', 4);
+                    .attr('stroke', '#80B3E1')
+                    .attr('stroke-width', 1)
 
                 // exit()
+                this.selectAll('.area')
+                    .data([params.data])
+                    .exit()
+                    .remove();
+
                 this.selectAll('.poop-line')
                     .data([params.data])
                     .exit()
