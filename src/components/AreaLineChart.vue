@@ -14,6 +14,11 @@
         name: "AreaLineChart",
         mounted: () => {
             let data = growthData;
+            let allInvestments = [];
+
+            // Aggregate all investments to scale chart
+            growthData.forEach(data => allInvestments.push(data.investments));
+            allInvestments = [].concat(...allInvestments);
 
             // Chart dimensions ----------------------------------------------------------------------------------------
             let w = 573;
@@ -27,8 +32,8 @@
             let height = h - margin.top - margin.bottom;
 
             // Get Domain Range Values
-            let xDomain = d3.extent(data, d => new Date().setUTCFullYear(d.year));
-            let yDomain = d3.extent(data, d => d.amount);
+            let xDomain = d3.extent(allInvestments, i => new Date().setUTCFullYear(i.year));
+            let yDomain = d3.extent(allInvestments, i => i.amount);
 
             // Create Chart Scale --------------------------------------------------------------------------------------
             let xScale = d3.scaleTime()
@@ -39,12 +44,13 @@
                 .domain(yDomain)
                 .range([height, 0]);
 
-            let area = d3.area()
+            // Create path generators
+            let areaGenerator = d3.area()
                 .x(d => xScale(new Date().setUTCFullYear(d.year)))
                 .y0(height)
                 .y1(d => yScale(d.amount));
 
-            let line = d3.line()
+            let lineGenerator = d3.line()
                 .x(d => xScale(new Date().setUTCFullYear(d.year)))
                 .y(d => yScale(d.amount));
 
@@ -66,28 +72,30 @@
             let yGridLines = d3.axisLeft(yScale)
                 .tickSize(-width, 0, 0)
                 .tickFormat('')
-                .ticks(3);
+                .ticks(5);
 
             let xGridLines = d3.axisBottom(xScale)
                 .tickSize(-height, 0, 0)
                 .tickFormat('');
 
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
 
             // Plot Chart ----------------------------------------------------------------------------------------------
             plot.call(chart, {
-                data: data,
-                scale: {
-                    x: xScale,
-                    y: yScale
-                },
+                areaGenerator: areaGenerator,
                 axis: {
                     x: xAxis,
                     y: yAxis
                 },
+                data: data,
                 gridLines: {
                     x: xGridLines,
                     y: yGridLines
+                },
+                lineGenerator: lineGenerator,
+                scale: {
+                    x: xScale,
+                    y: yScale
                 }
             });
 
@@ -114,45 +122,51 @@
                     .call(params.axis.y);
 
                 // Add visual elements to chart ------------------------------------------------------------------------
-                // enter()
-                this.selectAll('.area')
-                    .data([params.data])
-                    .enter()
-                    .append('path')
-                    .classed('area', true);
+                params.data.forEach((poop, index) => {
+                    let selector = poop.investmentType.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z ]/g, '');
 
-                this.selectAll('.poop-line')
-                    .data([params.data])
-                    .enter()
+                    // enter()
+                    this.selectAll(`${selector}-area`)
+                        .data([poop.investments])
+                        .enter()
                         .append('path')
-                        .classed('poop-line', true);
+                        .classed(`${selector}-area`, true);
 
-                // update
-                this.selectAll('.area')
-                    .attr('d', d => area(d))
-                    .attr('fill', '#80B3E1')
-                    .attr('opacity', 0.75);
+                    this.selectAll(`${selector}-line`)
+                        .data([poop.investments])
+                        .enter()
+                        .append('path')
+                        .classed(`${selector}-line`, true);
 
-                this.selectAll('.poop-line')
-                    .attr('d', d => line(d))
-                    .attr('fill', 'none')
-                    .attr('stroke', '#80B3E1')
-                    .attr('stroke-width', 1)
+                    // update()
+                    this.selectAll(`.${selector}-area`)
+                        .attr('d', d => params.areaGenerator(d))
+                        .attr('fill', () => params.data[index].color)
+                        .attr('opacity', 0.35);
+
+                    this.selectAll(`.${selector}-line`)
+                        .attr('d', d => lineGenerator(d))
+                        .attr('fill', 'none')
+                        .attr('stroke', () => params.data[index].color)
+                        .attr('stroke-width', 2)
+
+                    // exit()
+                });
 
                 // exit()
-                this.selectAll('.area')
-                    .data([params.data])
-                    .exit()
-                    .remove();
-
-                this.selectAll('.poop-line')
-                    .data([params.data])
-                    .exit()
-                    .remove();
-
-                this.selectAll('.tick')
-                    .filter(d => d === 0)
-                    .remove();
+                // this.selectAll('.area')
+                //     .data([params.data])
+                //     .exit()
+                //     .remove();
+                //
+                // this.selectAll('.poop-line')
+                //     .data([params.data])
+                //     .exit()
+                //     .remove();
+                //
+                // this.selectAll('.tick')
+                //     .filter(d => d === 0)
+                //     .remove();
             }
 
             // OLD CHART CODE---------
