@@ -32,18 +32,6 @@ export const growthData = [
                 "year": 2000
             },
             {
-                "amount": 24888,
-                "year": 2000
-            },
-            {
-                "amount": 6861,
-                "year": 2000
-            },
-            {
-                "amount": 5861,
-                "year": 2000
-            },
-            {
                 "amount": 5090,
                 "year": 2001
             },
@@ -76,7 +64,7 @@ export const growthData = [
                 "year": 2008
             },
             {
-                "amount": 16250,
+                "amount": 20250,
                 "year": 2009
             }
         ]
@@ -90,51 +78,39 @@ export const growthData = [
                 "year": 2000
             },
             {
-                "amount": 22888,
-                "year": 2000
-            },
-            {
-                "amount": 6861,
-                "year": 2000
-            },
-            {
-                "amount": 5861,
-                "year": 2000
-            },
-            {
-                "amount": 5090,
+                "amount": 3090,
                 "year": 2001
             },
             {
-                "amount": 5461,
+                "amount": 6461,
                 "year": 2002
             },
             {
-                "amount": 8900,
+                "amount": 6900,
                 "year": 2003
             },
             {
-                "amount": 9061,
+                "amount": 6061,
                 "year": 2004
             },
             {
-                "amount": 10861,
+                "amount": 8861,
                 "year": 2005
             },
             {
-                "amount": 12661,
+                "amount": 10661,
                 "year": 2006
             },
             {
-                "amount": 14461,
+                "amount": 11461,
                 "year": 2007
             },
             {
-                "amount": 15000,
+                "amount": 12000,
                 "year": 2008
             },
             {
-                "amount": 17250,
+                "amount": 14250,
                 "year": 2009
             }
         ]

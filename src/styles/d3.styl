@@ -20,8 +20,16 @@
     stroke-width: 1.5;
 }
 
+.base--area-line-chart .grid-line-y .tick:nth-last-child(1) line {
+    display: none;
+}
+
 /* Utility classes */
-.heavy { font: bold 10pt; font-family: 'Fi360 Sans Tabular', 'Helvetica' }
+.heavy { font: bold 10pt 'Fi360 Sans Tabular'};
+
+.area-line {
+    shape-rendering: crispEdges;
+}
 
 .line {
     stroke: black; stroke-width: 5px; fill: none;
