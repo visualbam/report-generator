@@ -4,11 +4,17 @@ import AreaLineChart from './components/AreaLineChart';
 import BarGraph from './components/BarGraph';
 import ColumnChart from './components/ColumnChart';
 import ScatterPlot from './components/ScatterPlot';
+import PieChart from './components/PieChart';
 
 Vue.use(Router);
 
 export default new Router({
     routes: [
+        {
+            path: '/pie-chart',
+            name: 'pie-chart',
+            component: PieChart,
+        },
         {
             path: '/area-line-chart',
             name: 'area-line-chart',

@@ -1,6 +1,8 @@
 <template>
     <div id="app">
         <div id="nav">
+            <router-link to="/pie-chart">Pie Chart</router-link>
+            |
             <router-link to="/area-line-chart">Area Line Chart</router-link>
             |
             <router-link to="/scatter-plot">Scatter Plot</router-link>

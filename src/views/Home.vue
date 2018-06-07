@@ -1,5 +1,7 @@
 <template>
     <div class="home">
+        <PieChart></PieChart>
+        <hr>
         <ScatterPlot></ScatterPlot>
         <hr>
         <BarGraph></BarGraph>
@@ -14,10 +16,12 @@
     import ColumnChart from '../components/ColumnChart.vue';
     import BarGraph from '../components/BarGraph.vue';
     import ScatterPlot from '../components/ScatterPlot.vue';
+    import PieChart from '../components/PieChart';
 
     export default {
         name: 'home',
         components: {
+            PieChart,
             AreaLineChart,
             BarGraph,
             ColumnChart,
