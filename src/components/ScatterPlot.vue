@@ -46,7 +46,6 @@
 
             // Get Domain Range Values
 
-            // let xDomain = d3.extent(data, function(d) { return d.StandardDeviatrionThreeYear; });
             let xDomain = d3.extent(data, d => d.StandardDeviatrionThreeYear);
             let yDomain = d3.extent(data, d => d.ThreeYearReturn);
 
@@ -79,16 +78,36 @@
 
             let chart = svg.append('g')
                 .classed('display', true)
-                .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
             // Create Axis ---------------------------------------------------------------------------------------------
 
-            let xTickValue = xDomain[1] > 10 ? 10 : xDomain[1];
-            let yTickValue = yDomain[1] > 7 ? 7 : yDomain[1];
-            let formatAxis = d3.format('d');
+            let xTickValue = setTickValues(xDomain[1], 10);
+            let yTickValue = setTickValues(yDomain[1], 6);
 
-            let xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(xTickValue).tickFormat(formatAxis);
-            let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(7).tickFormat(formatAxis);
+            let formatXAxis = setFormatAxis(xTickValue);
+            let formatYAxis = setFormatAxis(yTickValue);
+
+            let xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(xTickValue).tickFormat(formatXAxis);
+            let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(yTickValue).tickFormat(formatYAxis);
+
+            function setTickValues(domain, threshold) {
+                let value = null;
+
+                if (domain > threshold) {
+                    value = threshold;
+                } else if (domain === 0) {
+                    value = domain;
+                } else {
+                    value = 4;
+                }
+
+                return value;
+            }
+
+            function setFormatAxis(tickValue) {
+                tickValue === 4 ? d3.format('') : d3.format('d');
+            }
 
             // Create Grid lines ---------------------------------------------------------------------------------------
 
