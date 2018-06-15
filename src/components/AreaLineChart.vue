@@ -26,7 +26,7 @@
             var h = 170;
 
             // Configure chart margins ---------------------------------------------------------------------------------
-            var margin = { top: 20, right: 40, bottom: 40, left: 30 };
+            var margin = {top: 20, right: 40, bottom: 40, left: 30};
 
             // Configure chart dimensions based on data in relation to the margins -------------------------------------
             var width = w - margin.left - margin.right;
@@ -105,11 +105,20 @@
             });
 
             function plot(params) {
-                params.data.forEach((d, index) => {
-                    var selector = d.investmentType.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z ]/g, '');
+                // Create area fill based on model. Check for benchmark in case we don't know array position
+                var areaFillColor;
+                params.data.forEach(d => {
+                    if (!d.investmentType.toLowerCase().includes('benchmark')) {
+                        areaFillColor = shade(d.color, 0.9);
+                    }
+                });
+
+                params.data.forEach((data, index) => {
+                    var selector = data.investmentType.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z ]/g, '');
+
                     // enter()
                     this.selectAll(`${selector}-area`)
-                        .data([d.investments])
+                        .data([data.investments])
                         .enter()
                         .append('path')
                         .classed(`${selector}-area area-line`, true);
@@ -117,7 +126,7 @@
                     // update()
                     this.selectAll(`.${selector}-area`)
                         .attr('d', d => params.areaGenerator(d))
-                        .attr('fill', () => '#EFF4F9');
+                        .attr('fill', d => areaFillColor);
                 });
 
                 // Add grid lines to chart -----------------------------------------------------------------------------------
@@ -178,6 +187,40 @@
                 this.selectAll('.tick')
                     .filter(d => d === 5000)
                     .remove();
+            }
+
+            function hex2(c) {
+                c = Math.round(c);
+
+                if (c < 0) c = 0;
+                if (c > 255) c = 255;
+
+                let s = c.toString(16);
+                if (s.length < 2) s = "0" + s;
+
+                return s;
+            }
+
+            function color(r, g, b) {
+                return "#" + hex2(r) + hex2(g) + hex2(b);
+            }
+
+            function shade(col, light) {
+                let r = parseInt(col.substr(1, 2), 16);
+                let g = parseInt(col.substr(3, 2), 16);
+                let b = parseInt(col.substr(5, 2), 16);
+
+                if (light < 0) {
+                    r = (1 + light) * r;
+                    g = (1 + light) * g;
+                    b = (1 + light) * b;
+                } else {
+                    r = (1 - light) * r + light * 255;
+                    g = (1 - light) * g + light * 255;
+                    b = (1 - light) * b + light * 255;
+                }
+
+                return color(r, g, b);
             }
         }
     }
