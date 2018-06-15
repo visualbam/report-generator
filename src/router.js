@@ -4,6 +4,7 @@ import AreaLineChart from './components/AreaLineChart';
 import BarGraph from './components/BarGraph';
 import ColumnChart from './components/ColumnChart';
 import ScatterPlot from './components/ScatterPlot';
+import CrossScatterPlot from './components/CrossScatterPlot';
 import PieChart from './components/PieChart';
 
 Vue.use(Router);
@@ -35,5 +36,10 @@ export default new Router({
             name: 'scatter-plot',
             component: ScatterPlot,
         },
+        {
+            path: '/cross-scatter-plot',
+            name: 'cross-scatter-plot',
+            component: CrossScatterPlot,
+        }
     ],
 });

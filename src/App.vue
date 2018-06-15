@@ -5,6 +5,8 @@
             |
             <router-link to="/area-line-chart">Area Line Chart</router-link>
             |
+            <router-link to="/cross-scatter-plot">Cross Scatter Plot</router-link>
+            |
             <router-link to="/scatter-plot">Scatter Plot</router-link>
             |
             <router-link to="/bar-graph">Bar Graph</router-link>

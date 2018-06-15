@@ -2,6 +2,8 @@
     <div class="home">
         <PieChart></PieChart>
         <hr>
+        <CrossScatterPlot></CrossScatterPlot>
+        <hr>
         <ScatterPlot></ScatterPlot>
         <hr>
         <BarGraph></BarGraph>
@@ -16,6 +18,7 @@
     import ColumnChart from '../components/ColumnChart.vue';
     import BarGraph from '../components/BarGraph.vue';
     import ScatterPlot from '../components/ScatterPlot.vue';
+    import CrossScatterPlot from '../components/CrossScatterPlot.vue';
     import PieChart from '../components/PieChart';
 
     export default {
@@ -25,7 +28,8 @@
             AreaLineChart,
             BarGraph,
             ColumnChart,
-            ScatterPlot
+            ScatterPlot,
+            CrossScatterPlot
         },
     };
 </script>
