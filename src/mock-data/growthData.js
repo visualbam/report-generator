@@ -24,156 +24,156 @@
 
 export const growthData = [
     {
-        "color": "#80B3E1",
+        "color": "hsla(0, 60%, 60%, 1)",
         "investmentType": "Model",
         "investments": [
             {
                 "amount": 10000,
-                "monthEndDate": "January 1, 2000",
+                "monthEndDate": "January 1, 2000"
             },
             {
                 "amount": 10000,
-                "monthEndDate": "January 30, 2000",
+                "monthEndDate": "January 30, 2000"
             },
             {
                 "amount": 10200,
-                "monthEndDate": "February 30, 2000",
+                "monthEndDate": "February 30, 2000"
             },
             {
                 "amount": 10500,
-                "monthEndDate": "March 30, 2000",
+                "monthEndDate": "March 30, 2000"
             },
             {
                 "amount": 10900,
-                "monthEndDate": "April 30, 2000",
+                "monthEndDate": "April 30, 2000"
             },
             {
                 "amount": 10500,
-                "monthEndDate": "May 30, 2000",
+                "monthEndDate": "May 30, 2000"
             },
             {
                 "amount": 10800,
-                "monthEndDate": "June 30, 2000",
+                "monthEndDate": "June 30, 2000"
             },
             {
                 "amount": 10700,
-                "monthEndDate": "July 30, 2000",
+                "monthEndDate": "July 30, 2000"
             },
             {
                 "amount": 10500,
-                "monthEndDate": "August 30, 2000",
+                "monthEndDate": "August 30, 2000"
             },
             {
                 "amount": 10850,
-                "monthEndDate": "September 30, 2000",
+                "monthEndDate": "September 30, 2000"
             },
             {
                 "amount": 10900,
-                "monthEndDate": "October 30, 2000",
+                "monthEndDate": "October 30, 2000"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "November 30, 2000",
+                "monthEndDate": "November 30, 2000"
             },
             {
                 "amount": 11600,
-                "monthEndDate": "December 30, 2000",
+                "monthEndDate": "December 30, 2000"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "January 30, 2001",
+                "monthEndDate": "January 30, 2001"
             },
             {
                 "amount": 11200,
-                "monthEndDate": "February 30, 2001",
+                "monthEndDate": "February 30, 2001"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "March 30, 2001",
+                "monthEndDate": "March 30, 2001"
             },
             {
                 "amount": 11900,
-                "monthEndDate": "April 30, 2001",
+                "monthEndDate": "April 30, 2001"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "May 30, 2001",
+                "monthEndDate": "May 30, 2001"
             },
             {
                 "amount": 11800,
-                "monthEndDate": "June 30, 2001",
+                "monthEndDate": "June 30, 2001"
             },
             {
                 "amount": 11700,
-                "monthEndDate": "July 30, 2001",
+                "monthEndDate": "July 30, 2001"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "August 30, 2001",
+                "monthEndDate": "August 30, 2001"
             },
             {
                 "amount": 11850,
-                "monthEndDate": "September 30, 2001",
+                "monthEndDate": "September 30, 2001"
             },
             {
                 "amount": 11900,
-                "monthEndDate": "October 30, 2001",
+                "monthEndDate": "October 30, 2001"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "November 30, 2001",
+                "monthEndDate": "November 30, 2001"
             },
             {
                 "amount": 11600,
-                "monthEndDate": "December 30, 2001",
+                "monthEndDate": "December 30, 2001"
             },
             {
                 "amount": 12000,
-                "monthEndDate": "January 30, 2002",
+                "monthEndDate": "January 30, 2002"
             },
             {
                 "amount": 12200,
-                "monthEndDate": "February 30, 2002",
+                "monthEndDate": "February 30, 2002"
             },
             {
                 "amount": 12500,
-                "monthEndDate": "March 30, 2002",
+                "monthEndDate": "March 30, 2002"
             },
             {
                 "amount": 12900,
-                "monthEndDate": "April 30, 2002",
+                "monthEndDate": "April 30, 2002"
             },
             {
                 "amount": 12500,
-                "monthEndDate": "May 30, 2002",
+                "monthEndDate": "May 30, 2002"
             },
             {
                 "amount": 12800,
-                "monthEndDate": "June 30, 2002",
+                "monthEndDate": "June 30, 2002"
             },
             {
                 "amount": 12700,
-                "monthEndDate": "July 30, 2002",
+                "monthEndDate": "July 30, 2002"
             },
             {
                 "amount": 12500,
-                "monthEndDate": "August 30, 2002",
+                "monthEndDate": "August 30, 2002"
             },
             {
                 "amount": 12850,
-                "monthEndDate": "September 30, 2002",
+                "monthEndDate": "September 30, 2002"
             },
             {
                 "amount": 12900,
-                "monthEndDate": "October 30, 2002",
+                "monthEndDate": "October 30, 2002"
             },
             {
                 "amount": 12000,
-                "monthEndDate": "November 30, 2002",
+                "monthEndDate": "November 30, 2002"
             },
             {
                 "amount": 12600,
-                "monthEndDate": "December 30, 2002",
+                "monthEndDate": "December 30, 2002"
             },
             {
                 "amount": 13000,
@@ -510,160 +510,164 @@ export const growthData = [
             {
                 "amount": 19600,
                 "monthEndDate": "December 30, 2009"
+            },
+            {
+                "amount": 35000,
+                "monthEndDate": "July 30, 2018"
             }
         ]
     },
     {
-        "color": "#B7D87B",
+        "color": "hsla(180, 60%, 60%, 1)",
         "investmentType": "+/- Peer Group Benchmark",
         "investments": [
             {
                 "amount": 10000,
-                "monthEndDate": "January 1, 2000",
+                "monthEndDate": "January 1, 2000"
             },
             {
                 "amount": 10000,
-                "monthEndDate": "January 30, 2000",
+                "monthEndDate": "January 30, 2000"
             },
             {
                 "amount": 10100,
-                "monthEndDate": "February 30, 2000",
+                "monthEndDate": "February 30, 2000"
             },
             {
                 "amount": 10100,
-                "monthEndDate": "March 30, 2000",
+                "monthEndDate": "March 30, 2000"
             },
             {
                 "amount": 10200,
-                "monthEndDate": "April 30, 2000",
+                "monthEndDate": "April 30, 2000"
             },
             {
                 "amount": 10300,
-                "monthEndDate": "May 30, 2000",
+                "monthEndDate": "May 30, 2000"
             },
             {
                 "amount": 9500,
-                "monthEndDate": "June 30, 2000",
+                "monthEndDate": "June 30, 2000"
             },
             {
                 "amount": 10200,
-                "monthEndDate": "July 30, 2000",
+                "monthEndDate": "July 30, 2000"
             },
             {
                 "amount": 10500,
-                "monthEndDate": "August 30, 2000",
+                "monthEndDate": "August 30, 2000"
             },
             {
                 "amount": 10850,
-                "monthEndDate": "September 30, 2000",
+                "monthEndDate": "September 30, 2000"
             },
             {
                 "amount": 10900,
-                "monthEndDate": "October 30, 2000",
+                "monthEndDate": "October 30, 2000"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "November 30, 2000",
+                "monthEndDate": "November 30, 2000"
             },
             {
                 "amount": 11600,
-                "monthEndDate": "December 30, 2000",
+                "monthEndDate": "December 30, 2000"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "January 30, 2001",
+                "monthEndDate": "January 30, 2001"
             },
             {
                 "amount": 11200,
-                "monthEndDate": "February 30, 2001",
+                "monthEndDate": "February 30, 2001"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "March 30, 2001",
+                "monthEndDate": "March 30, 2001"
             },
             {
                 "amount": 11900,
-                "monthEndDate": "April 30, 2001",
+                "monthEndDate": "April 30, 2001"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "May 30, 2001",
+                "monthEndDate": "May 30, 2001"
             },
             {
                 "amount": 11800,
-                "monthEndDate": "June 30, 2001",
+                "monthEndDate": "June 30, 2001"
             },
             {
                 "amount": 11700,
-                "monthEndDate": "July 30, 2001",
+                "monthEndDate": "July 30, 2001"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "August 30, 2001",
+                "monthEndDate": "August 30, 2001"
             },
             {
                 "amount": 11850,
-                "monthEndDate": "September 30, 2001",
+                "monthEndDate": "September 30, 2001"
             },
             {
                 "amount": 11900,
-                "monthEndDate": "October 30, 2001",
+                "monthEndDate": "October 30, 2001"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "November 30, 2001",
+                "monthEndDate": "November 30, 2001"
             },
             {
                 "amount": 11600,
-                "monthEndDate": "December 30, 2001",
+                "monthEndDate": "December 30, 2001"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "January 30, 2002",
+                "monthEndDate": "January 30, 2002"
             },
             {
                 "amount": 11200,
-                "monthEndDate": "February 30, 2002",
+                "monthEndDate": "February 30, 2002"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "March 30, 2002",
+                "monthEndDate": "March 30, 2002"
             },
             {
                 "amount": 11900,
-                "monthEndDate": "April 30, 2002",
+                "monthEndDate": "April 30, 2002"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "May 30, 2002",
+                "monthEndDate": "May 30, 2002"
             },
             {
                 "amount": 11800,
-                "monthEndDate": "June 30, 2002",
+                "monthEndDate": "June 30, 2002"
             },
             {
                 "amount": 11700,
-                "monthEndDate": "July 30, 2002",
+                "monthEndDate": "July 30, 2002"
             },
             {
                 "amount": 11500,
-                "monthEndDate": "August 30, 2002",
+                "monthEndDate": "August 30, 2002"
             },
             {
                 "amount": 11850,
-                "monthEndDate": "September 30, 2002",
+                "monthEndDate": "September 30, 2002"
             },
             {
                 "amount": 11900,
-                "monthEndDate": "October 30, 2002",
+                "monthEndDate": "October 30, 2002"
             },
             {
                 "amount": 11000,
-                "monthEndDate": "November 30, 2002",
+                "monthEndDate": "November 30, 2002"
             },
             {
                 "amount": 11600,
-                "monthEndDate": "December 30, 2002",
+                "monthEndDate": "December 30, 2002"
             },
             {
                 "amount": 12000,
@@ -1000,6 +1004,10 @@ export const growthData = [
             {
                 "amount": 15600,
                 "monthEndDate": "December 30, 2009"
+            },
+            {
+                "amount": 15600,
+                "monthEndDate": "July 30, 2018"
             }
         ]
     }

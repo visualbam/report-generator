@@ -17,30 +17,44 @@
             var data = growthData;
             var allInvestments = [];
 
+            data.forEach(d => {
+                let earliestInvestmentYear = d3.min(d.investments, i => i.monthEndDate.split(', ')[1]);
+                let latestInvestmentYear = d3.max(d.investments, i => i.monthEndDate.split(', ')[1]);
+
+                d.investments = d.investments.filter(i => {
+                    if (latestInvestmentYear - earliestInvestmentYear > 10) {
+                        return i.monthEndDate.split(', ')[1] > (latestInvestmentYear - 10);
+                    }
+                    return true;
+                });
+            });
+
             // Aggregate all investments to scale chart
-            growthData.forEach(data => allInvestments.push(data.investments));
+            data.forEach((d, i) => allInvestments.push(d.investments));
             allInvestments = [].concat(...allInvestments);
+
+            // Add beginning of year and end of year to get accurate start / end
+            var earliestInvestmentYear = d3.min(allInvestments, i => i.monthEndDate.split(', ')[1]);
+            var latestInvestmentYear = d3.max(allInvestments, i => i.monthEndDate.split(', ')[1]);
+
+            allInvestments.unshift({ amount: 0, monthEndDate: `January 1, ${earliestInvestmentYear}` });
+            allInvestments.push({ amount: 0, monthEndDate: `December 31, ${latestInvestmentYear}` });
 
             // Chart dimensions ----------------------------------------------------------------------------------------
             var w = 573;
             var h = 170;
 
             // Configure chart margins ---------------------------------------------------------------------------------
-            var margin = {top: 20, right: 40, bottom: 40, left: 30};
+            var margin = { top: 10, right: 10, bottom: 40, left: 30 };
 
             // Configure chart dimensions based on data in relation to the margins -------------------------------------
             var width = w - margin.left - margin.right;
             var height = h - margin.top - margin.bottom;
 
-            var offSetMonthByOne = (allInvestments.length % 12 === 0) ? 1 : 0;
-
             // Get Domain Range Values
-            var xDomain = [
-                d3.min(allInvestments, i => new Date(i.monthEndDate)),
-                d3.timeYear.offset(d3.max(allInvestments, i => new Date(i.monthEndDate)), offSetMonthByOne)
-            ];
+            var xDomain = d3.extent(allInvestments, i => new Date(i.monthEndDate));
 
-            var yDomain = [5000, Math.ceil(d3.max(allInvestments, i => i.amount) / 10000) * 10000];
+            var yDomain = [0, Math.ceil(d3.max(allInvestments, i => i.amount) / 10000) * 10000];
 
             // Create Chart Scale --------------------------------------------------------------------------------------
             var xScale = d3.scaleTime()
@@ -73,17 +87,18 @@
 
             // Create Axis ---------------------------------------------------------------------------------------------
             var xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(d3.timeYear.every(1));
-            var yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(3).tickFormat(d3.format('~s'));
+            var yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(5).tickFormat(d3.format('~s'));
 
             // Create Grid lines ---------------------------------------------------------------------------------------
             var yGridLines = d3.axisLeft(yScale)
                 .tickSize(-width, 0, 0)
                 .tickFormat('')
-                .ticks(3);
+                .ticks(5);
 
             var xGridLines = d3.axisBottom(xScale)
                 .tickSize(-height, 0, 0)
-                .tickFormat('');
+                .tickFormat('')
+                .ticks(10);
 
             // Plot Chart ----------------------------------------------------------------------------------------------
             plot.call(chart, {
@@ -109,16 +124,15 @@
                 var areaFillColor;
                 params.data.forEach(d => {
                     if (!d.investmentType.toLowerCase().includes('benchmark')) {
-                        areaFillColor = shade(d.color, 0.9);
+                        areaFillColor = lighten(d.color, 98);
                     }
                 });
 
-                params.data.forEach((data, index) => {
-                    var selector = data.investmentType.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z ]/g, '');
-
+                params.data.forEach((d, index) => {
+                    var selector = d.investmentType.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z ]/g, '');
                     // enter()
                     this.selectAll(`${selector}-area`)
-                        .data([data.investments])
+                        .data([d.investments])
                         .enter()
                         .append('path')
                         .classed(`${selector}-area area-line`, true);
@@ -170,7 +184,7 @@
                     .call(params.axis.y);
 
                 this.selectAll('.x text')
-                    .attr("x", 10)
+                    .attr("x", 6)
                     .style("text-anchor", "start");
 
                 // exit()
@@ -185,8 +199,17 @@
                     .remove();
 
                 this.selectAll('.tick')
-                    .filter(d => d === 5000)
+                    .filter(d => d === 0)
                     .remove();
+            }
+
+            function lighten(hsla, lightness) {
+                var color = hsla.split(', ');
+                var h = color[0].replace(/\D/g,'');
+                var s = color[1];
+                var l = lightness ? `${lightness}%` : color[2];
+                var a = color[3].replace(/\D/g,'');
+                return `hsla(${h}, ${s}, ${l}, ${a})`;
             }
 
             function hex2(c) {
