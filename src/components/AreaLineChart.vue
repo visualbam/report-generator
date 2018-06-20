@@ -17,17 +17,17 @@
             var data = growthData;
             var allInvestments = [];
 
-            data.forEach(d => {
-                let earliestInvestmentYear = d3.min(d.investments, i => i.monthEndDate.split(', ')[1]);
-                let latestInvestmentYear = d3.max(d.investments, i => i.monthEndDate.split(', ')[1]);
-
-                d.investments = d.investments.filter(i => {
-                    if (latestInvestmentYear - earliestInvestmentYear > 10) {
-                        return i.monthEndDate.split(', ')[1] > (latestInvestmentYear - 10);
-                    }
-                    return true;
-                });
-            });
+            // data.forEach(d => {
+            //     let earliestInvestmentYear = d3.min(d.investments, i => i.monthEndDate.split(', ')[1]);
+            //     let latestInvestmentYear = d3.max(d.investments, i => i.monthEndDate.split(', ')[1]);
+            //
+            //     d.investments = d.investments.filter(i => {
+            //         if (latestInvestmentYear - earliestInvestmentYear > 10) {
+            //             return i.monthEndDate.split(', ')[1] > (latestInvestmentYear - 10);
+            //         }
+            //         return true;
+            //     });
+            // });
 
             // Aggregate all investments to scale chart
             data.forEach((d, i) => allInvestments.push(d.investments));
@@ -35,17 +35,24 @@
 
             // Add beginning of year and end of year to get accurate start / end
             var earliestInvestmentYear = d3.min(allInvestments, i => i.monthEndDate.split(', ')[1]);
-            var latestInvestmentYear = d3.max(allInvestments, i => i.monthEndDate.split(', ')[1]);
+            var latestInvestmentYear = parseFloat(d3.max(allInvestments, i => i.monthEndDate.split(', ')[1]));
+            var yearDifference = latestInvestmentYear - earliestInvestmentYear;
 
-            allInvestments.unshift({ amount: 0, monthEndDate: `January 1, ${earliestInvestmentYear}` });
-            allInvestments.push({ amount: 0, monthEndDate: `December 31, ${latestInvestmentYear}` });
+            if (yearDifference > 10) {
+                // when we have a diff of 10, we need to show every 2 years.
+                // this rounds to the nearest odd year value to scale chart evenly
+                latestInvestmentYear = 2 * Math.floor(latestInvestmentYear / 2) + 1;
+            }
+
+            allInvestments.unshift({ amount: 10000, monthEndDate: `January 1, ${earliestInvestmentYear}` });
+            allInvestments.push({ amount: 0, monthEndDate: new Date(`December 31, ${latestInvestmentYear}`) });
 
             // Chart dimensions ----------------------------------------------------------------------------------------
-            var w = 573;
-            var h = 170;
+            var w = 446;
+            var h = 150;
 
             // Configure chart margins ---------------------------------------------------------------------------------
-            var margin = { top: 10, right: 10, bottom: 40, left: 30 };
+            var margin = { top: 10, right: 20, bottom: 40, left: 32 };
 
             // Configure chart dimensions based on data in relation to the margins -------------------------------------
             var width = w - margin.left - margin.right;
@@ -54,7 +61,7 @@
             // Get Domain Range Values
             var xDomain = d3.extent(allInvestments, i => new Date(i.monthEndDate));
 
-            var yDomain = [0, Math.ceil(d3.max(allInvestments, i => i.amount) / 10000) * 10000];
+            var yDomain = [5000, Math.ceil(d3.max(allInvestments, i => i.amount) / 10000) * 10000];
 
             // Create Chart Scale --------------------------------------------------------------------------------------
             var xScale = d3.scaleTime()
@@ -86,7 +93,8 @@
                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
             // Create Axis ---------------------------------------------------------------------------------------------
-            var xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(d3.timeYear.every(1));
+            var tickValue = yearDifference > 10 ? 2 : 1;
+            var xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(d3.timeYear.every(tickValue));
             var yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(5).tickFormat(d3.format('~s'));
 
             // Create Grid lines ---------------------------------------------------------------------------------------
@@ -98,7 +106,7 @@
             var xGridLines = d3.axisBottom(xScale)
                 .tickSize(-height, 0, 0)
                 .tickFormat('')
-                .ticks(10);
+                .ticks(d3.timeYear.every(tickValue));
 
             // Plot Chart ----------------------------------------------------------------------------------------------
             plot.call(chart, {
@@ -122,11 +130,6 @@
             function plot(params) {
                 // Create area fill based on model. Check for benchmark in case we don't know array position
                 var areaFillColor;
-                params.data.forEach(d => {
-                    if (!d.investmentType.toLowerCase().includes('benchmark')) {
-                        areaFillColor = lighten(d.color, 98);
-                    }
-                });
 
                 params.data.forEach((d, index) => {
                     var selector = d.investmentType.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z ]/g, '');
@@ -138,9 +141,11 @@
                         .classed(`${selector}-area area-line`, true);
 
                     // update()
-                    this.selectAll(`.${selector}-area`)
-                        .attr('d', d => params.areaGenerator(d))
-                        .attr('fill', d => areaFillColor);
+                    if (!d.investmentType.toLowerCase().includes('benchmark')) {
+                        this.selectAll(`.${selector}-area`)
+                            .attr('d', d => params.areaGenerator(d))
+                            .attr('fill', () => areaFillColor = lighten(d.color, 98));
+                    }
                 });
 
                 // Add grid lines to chart -----------------------------------------------------------------------------------
@@ -183,9 +188,34 @@
                     .classed('heavy', true)
                     .call(params.axis.y);
 
+                function positionLabel(yearDifference){
+                    switch(yearDifference){
+                        case 4: return 22;
+                        case 5: return 16;
+                        case 6: return 12;
+                        case 7: return 8;
+                        case 8: return 6;
+                        case 9: return 4;
+                        case 10: return 2;
+                        case 11: return 16;
+                        case 12: return 12;
+                        case 13: return 12;
+                        case 14: return 8;
+                        case 15: return 6;
+                        case 16: return 4;
+                        case 17: return 4;
+                        case 18: return 4;
+                        case 19: return 2;
+                        case 20: return 0;
+                    }
+                }
+
                 this.selectAll('.x text')
-                    .attr("x", 6)
+                    .attr("x", positionLabel(yearDifference))
                     .style("text-anchor", "start");
+
+                this.selectAll('.y text')
+                    .style("text-transform", "uppercase");
 
                 // exit()
                 this.selectAll('.area')
@@ -198,9 +228,9 @@
                     .exit()
                     .remove();
 
-                this.selectAll('.tick')
-                    .filter(d => d === 0)
-                    .remove();
+                // this.selectAll('.tick')
+                //     .filter(d => d === 0)
+                //     .remove();
             }
 
             function lighten(hsla, lightness) {

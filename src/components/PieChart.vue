@@ -44,9 +44,10 @@
 
             g.append('path')
                 .attr('d', arc)
-                .style('stroke', 'white')
-                .style('stroke-width', '4px')
+                .classed('pie-chart-stroke', true)
                 .style('fill', (d, i) => colorScale(pieChartColors[i]));
+
+            // exit()
 
 
             // helper functions
@@ -63,6 +64,10 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .pie-chart-stroke {
+        stroke: white;
+        stroke-width: 4px;
+        shape-rendering: auto;
+    }
 </style>

@@ -30,6 +30,8 @@
         mounted() {
             let data = investments;
 
+            data.map(d => mapNegativeValuesToZero(d));
+
             // Chart dimensions ----------------------------------------------------------------------------------------
 
             let w = 700;
@@ -46,8 +48,8 @@
 
             // Get Domain Range Values
 
-            let xDomain = d3.extent(data, d => d.StandardDeviatrionThreeYear);
-            let yDomain = d3.extent(data, d => d.ThreeYearReturn);
+            let xDomain = [0, Math.ceil(((d3.max(data, d => d.StandardDeviatrionThreeYear) + 5) / 5) * 5)];
+            let yDomain = [0, Math.ceil(((d3.max(data, d => d.ThreeYearReturn) + 5) / 5) * 5)];
 
             // Create Chart Scale --------------------------------------------------------------------------------------
 
@@ -91,24 +93,6 @@
             let xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(xTickValue).tickFormat(formatXAxis);
             let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(yTickValue).tickFormat(formatYAxis);
 
-            function setTickValues(domain, threshold) {
-                let value = null;
-
-                if (domain > threshold) {
-                    value = threshold;
-                } else if (domain === 0) {
-                    value = domain;
-                } else {
-                    value = 4;
-                }
-
-                return value;
-            }
-
-            function setFormatAxis(tickValue) {
-                tickValue === 4 ? d3.format('') : d3.format('d');
-            }
-
             // Create Grid lines ---------------------------------------------------------------------------------------
 
             let yGridLines = d3.axisLeft(yScale)
@@ -139,23 +123,44 @@
                 }
             });
 
-            function ColorLuminance(hex, lum) {
-                // validate hex string
-                hex = String(hex).replace(/[^0-9a-f]/gi, '');
-                if (hex.length < 6) {
-                    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-                }
-                lum = lum || 0;
+            function setTickValues(domain, threshold) {
+                let value = null;
 
-                // convert to decimal and change luminosity
-                var rgb = "#", c, i;
-                for (i = 0; i < 3; i++) {
-                    c = parseInt(hex.substr(i * 2, 2), 16);
-                    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-                    rgb += ("00" + c).substr(c.length);
+                if (domain > threshold) {
+                    value = threshold;
+                } else if (domain === 0) {
+                    value = domain;
+                } else {
+                    value = 4;
                 }
 
-                return rgb;
+                return value;
+            }
+
+            function lighten(hsla, lightness) {
+                var color = hsla.split(', ');
+                var h = color[0].replace(/\D/g,'');
+                var s = color[1];
+                var l = lightness ? `${lightness}%` : color[2];
+                var a = color[3].replace(/\D/g,'');
+                return `hsla(${h}, ${s}, ${l}, ${a})`;
+            }
+
+            function setFormatAxis(tickValue) {
+                tickValue === 4 ? d3.format('') : d3.format('d');
+            }
+
+            function mapNegativeValuesToZero(object) {
+                for (let [key, value] of entries(object)) {
+                    if (Math.sign(value) < 0) object[key] = 0;
+                }
+                return Object.assign({}, object);
+            }
+
+            function* entries(object) {
+                for (let key of Object.keys(object)) {
+                    yield [key, object[key]];
+                }
             }
 
             function plot(params) {
@@ -191,7 +196,7 @@
                     .attr('r', 10)
                     .attr('stroke-width', 1)
                     .attr('fill', d => d.Color)
-                    .attr('stroke', d => ColorLuminance(d.Color, -0.05))
+                    .attr('stroke', d => lighten(d.Color, 60))
                     .attr('cx', d => params.scale.x(d.StandardDeviatrionThreeYear))
                     .attr('cy', d => params.scale.y(d.ThreeYearReturn));
 

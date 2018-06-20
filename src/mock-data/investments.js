@@ -1,9 +1,9 @@
-export const investments = createInvestmentList(2);
+export const investments = createInvestmentList(11);
 // export const investments = [
 //     {
 //         "Id": 0,
 //         "InvestmentName": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eros felis, accumsan eget orci at.",
-//         "Color": "#F37777",
+//         "Color": "hsl(0, 84%, 71%, 1)",
 //         "Quarter": 1000.98,
 //         "YearToDate": 12.00,
 //         "OneYearReturn": 2.00,
@@ -16,7 +16,7 @@ export const investments = createInvestmentList(2);
 //     {
 //         "Id": 1,
 //         "InvestmentName": "Balanced 60 40",
-//         "Color": "#F4B578",
+//         "Color": "hsl(30, 85%, 71%, 1)",
 //         "Quarter": 1.23,
 //         "YearToDate": 12.23,
 //         "OneYearReturn": 2.44,
@@ -29,20 +29,20 @@ export const investments = createInvestmentList(2);
 //     {
 //         "Id": 2,
 //         "InvestmentName": "Conservative 20 80",
-//         "Color": "#ECED7E",
-//         "Quarter": 1.43,
-//         "YearToDate": 22.11,
-//         "OneYearReturn": 4.99,
+//         "Color": "hsl(61, 76%, 71%, 1)",
+//         "Quarter": -1.43,
+//         "YearToDate": -22.11,
+//         "OneYearReturn": -4.99,
 //         "ThreeYearReturn": 3.00,
-//         "FiveYearReturn": 3.23,
+//         "FiveYearReturn": -3.23,
 //         "TenYearReturn": null,
-//         "StandardDeviatrionThreeYear": 3.00,
-//         "StandardDeviationFiveYear": 7.00
+//         "StandardDeviatrionThreeYear": -3.00,
+//         "StandardDeviationFiveYear": -7.00
 //     },
 //     {
 //         "Id": 3,
 //         "InvestmentName": "Ultra Conservative 100",
-//         "Color": "#B7D87B",
+//         "Color": "hsl(81, 54%, 66%, 1)",
 //         "Quarter": 7.43,
 //         "YearToDate": 1.11,
 //         "OneYearReturn": 2.55,
@@ -55,7 +55,7 @@ export const investments = createInvestmentList(2);
 //     {
 //         "Id": 4,
 //         "InvestmentName": "Ultra Conservative 200",
-//         "Color": "#8CCA76",
+//         "Color": "hsl(104, 44%, 63%, 1)",
 //         "Quarter": 7.43,
 //         "YearToDate": 1.11,
 //         "OneYearReturn": 2.55,
@@ -68,7 +68,7 @@ export const investments = createInvestmentList(2);
 //     {
 //         "Id": 5,
 //         "InvestmentName": "Ultra Conservative 600",
-//         "Color": "#8DCFAB",
+//         "Color": "hsl(147, 41%, 68%, 1)",
 //         "Quarter": 7.43,
 //         "YearToDate": 1.11,
 //         "OneYearReturn": 2.55,
@@ -79,8 +79,6 @@ export const investments = createInvestmentList(2);
 //         "StandardDeviationFiveYear": 66.11
 //     }
 // ];
-
-
 
 function createInvestmentList(numberOfInvestments) {
     let investments = [];
@@ -93,12 +91,12 @@ function createInvestmentList(numberOfInvestments) {
         'Ultra Conservative 800'
     ];
     let colors = [
-        '#F37777',
-        '#F4B578',
-        '#ECED7E',
-        '#B7D87B',
-        '#8CCA76',
-        '#8DCFAB'
+        'hsl(0, 84%, 71%, 1)',
+        'hsl(30, 85%, 71%, 1)',
+        'hsl(61, 76%, 71%, 1)',
+        'hsl(81, 54%, 66%, 1)',
+        'hsl(104, 44%, 63%, 1)',
+        'hsl(147, 41%, 68%, 1)'
     ];
 
     for (let x = 0; x < numberOfInvestments; x++) {
