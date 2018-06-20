@@ -47,9 +47,10 @@
             let height = h - margin.top - margin.bottom;
 
             // Get Domain Range Values
-
-            let xDomain = [0, Math.ceil(((d3.max(data, d => d.StandardDeviatrionThreeYear) + 5) / 5) * 5)];
-            let yDomain = [0, Math.ceil(((d3.max(data, d => d.ThreeYearReturn) + 5) / 5) * 5)];
+            let genXValue = Math.ceil(((d3.max(data, d => d.StandardDeviatrionThreeYear) + 5) / 5) * 5);
+            let genyValue = Math.ceil(((d3.max(data, d => d.ThreeYearReturn) + 5) / 5) * 5);
+            let xDomain = [0, 2 * Math.round(genXValue / 2)];
+            let yDomain = [0, 2 * Math.round(genyValue / 2)];
 
             // Create Chart Scale --------------------------------------------------------------------------------------
 
