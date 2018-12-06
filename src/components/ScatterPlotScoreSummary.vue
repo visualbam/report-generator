@@ -9,6 +9,7 @@
     /* eslint-disable */
     import * as d3 from 'd3';
     import { investments } from '../mock-data/investments';
+    import { assets } from '../mock-data/assets';
 
     /*
     * x-axis: STANDARD DEVIATION 3 YR %
@@ -28,7 +29,7 @@
     export default {
         name: "ScatterPlot",
         mounted() {
-            let data = investments;
+            let data = assets.Points;
 
             let axisOptions = [
                 { value: 'Fi360 Fiduciary Score'},
@@ -163,27 +164,77 @@
                     .call(params.gridLines.x)
                     .classed('grid-line', true);
 
+                // green
                 this.append('g')
                     .append('line')
-                    .attr('x1', 125)
-                    .attr('y1', 0)
+                    .call(params.gridLines.x)
+                    .attr('x1', 123)
+                    .attr('y1', 340)
                     .attr('x2', 0)
-                    .attr('y2', 0)
-                    .style('stroke', 'green');
+                    .attr('y2', 340)
+                    .style('stroke-width', 2)
+                    .style('stroke', '#ABC977');
 
                 this.append('g')
                     .append('line')
-                    .attr('x1', 125)
-                    .attr('y1', 125)
-                    .attr('x2', 125)
-                    .attr('y2', 0)
-                    .style('stroke', 'green');
+                    .attr('x1', 123)
+                    .attr('y1', 455)
+                    .attr('x2', 123)
+                    .attr('y2', 340)
+                    .style('stroke-width', 2)
+                    .style('stroke', '#ABC977');
+
+                // yellow
+                this.append('g')
+                    .append('line')
+                    .call(params.gridLines.x)
+                    .attr('x1', 243)
+                    .attr('y1', 228)
+                    .attr('x2', 0)
+                    .attr('y2', 228)
+                    .style('stroke-width', 2)
+                    .style('stroke', '#FCC210');
+
+                this.append('g')
+                    .append('line')
+                    .attr('x1', 243)
+                    .attr('y1', 455)
+                    .attr('x2', 243)
+                    .attr('y2', 228)
+                    .style('stroke-width', 2)
+                    .style('stroke', '#FCC210');
+
+                // red
+                this.append('g')
+                    .append('line')
+                    .call(params.gridLines.x)
+                    .attr('x1', 365)
+                    .attr('y1', 114)
+                    .attr('x2', 0)
+                    .attr('y2', 114)
+                    .style('stroke-width', 2)
+                    .style('stroke', '#DB3B3B');
+
+                this.append('g')
+                    .append('line')
+                    .attr('x1', 365)
+                    .attr('y1', 455)
+                    .attr('x2', 365)
+                    .attr('y2', 114)
+                    .style('stroke-width', 2)
+                    .style('stroke', '#DB3B3B');
 
                 this.selectAll('.point')
                     .data(params.data)
                     .enter()
                     .append('circle')
                     .classed('point', true);
+
+                this.selectAll('.point-label')
+                    .data(params.data)
+                    .enter()
+                    .append('text')
+                    .classed('point-label', true)
 
                 this.append('g')
                     .classed('x axis', true)
@@ -198,12 +249,18 @@
 
                 // update()
                 this.selectAll('.point')
-                    .attr('r', 10)
+                    .attr('r', d => d.AssetPercentage)
                     .attr('stroke-width', 1)
                     .attr('fill', d => d.Color)
                     .attr('stroke', d => lighten(d.Color, 60))
-                    .attr('cx', d => params.scale.x(d.StandardDeviatrionThreeYear))
-                    .attr('cy', d => params.scale.y(d.ThreeYearReturn));
+                    .attr('cx', d => params.scale.x(d.XValue))
+                    .attr('cy', d => params.scale.y(d.YValue));
+
+                this.selectAll('.point-label')
+                    .attr('x', d => params.scale.x(d.XValue))
+                    .attr('y', d => params.scale.y(d.YValue))
+                    .attr('dy', '5')
+                    .text(d => d.Id);
 
                 this.select('.y.axis')
                     .append('text')
@@ -214,7 +271,7 @@
                     .attr('fill', 'black')
                     // Translate label to be positioned at half the height of the chart (middle) & rotate 90 degrees
                     .attr('transform', `translate(-30, ${height / 2}) rotate(-90)`)
-                    .text('RETURN 3 YR %');
+                    .text(`${assets.XAxisColumnName}`);
 
                 this.select('.x.axis')
                     .append('text')
@@ -224,7 +281,7 @@
                     .attr('text-anchor', 'middle')
                     .attr('transform', `translate(${width / 2}, 45)`)
                     .attr('fill', 'black')
-                    .text('STANDARD DEVIATION 3 YR %');
+                    .text(`${assets.YAxisColumnName}`);
 
                 // exit()
                 this.selectAll('.point')
