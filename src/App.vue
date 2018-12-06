@@ -9,6 +9,8 @@
             |
             <router-link to="/scatter-plot">Scatter Plot</router-link>
             |
+            <router-link to="/scatter-plot-score-summary">Scatter Plot Score Summary</router-link>
+            |
             <router-link to="/bar-graph">Bar Graph</router-link>
             |
             <router-link to="/column-chart">Column Chart</router-link>
@@ -16,6 +18,15 @@
         <router-view/>
     </div>
 </template>
+
+<script>
+    export default {
+        name: "Application",
+        created() {
+            this.$router.push('scatter-plot-score-summary');
+        }
+    }
+</script>
 
 <style lang="stylus">
     @import 'styles/main.styl';

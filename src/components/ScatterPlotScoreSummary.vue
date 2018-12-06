@@ -30,50 +30,42 @@
         mounted() {
             let data = investments;
 
+            let axisOptions = [
+                { value: 'Fi360 Fiduciary Score'},
+                { value: 'Fi360 Fiduciary Score: 1 Year Trend'},
+                { value: 'Fi360 Fiduciary Score: 3 Year Trend'},
+                { value: 'Fi360 Fiduciary Score: 5 Year Trend'},
+                { value: 'Fi360 Fiduciary Score: 10 Year Trend'}
+            ];
+
+            // process data before we plot it
             data.map(d => mapNegativeValuesToZero(d));
 
             // Chart dimensions ----------------------------------------------------------------------------------------
-
-            let w = 700;
-            let h = 275;
+            let w = 554;
+            let h = 540;
 
             // Configure chart margins ---------------------------------------------------------------------------------
-
             let margin = {top: 20, bottom: 65, left: 50, right: 20};
 
             // Configure chart dimensions based on data in relation to the margins -------------------------------------
-
             let width = w - margin.left - margin.right;
             let height = h - margin.top - margin.bottom;
 
             // Get Domain Range Values
-            let genXValue = Math.ceil(((d3.max(data, d => d.StandardDeviatrionThreeYear) + 5) / 5) * 5);
-            let genYValue = Math.ceil(((d3.max(data, d => d.ThreeYearReturn) + 5) / 5) * 5);
-            let xDomain = [0, 2 * Math.round(genXValue / 2)];
-            let yDomain = [0, 2 * Math.round(genYValue / 2)];
+            let xDomain = [0, 100];
+            let yDomain = [0, 100];
 
             // Create Chart Scale --------------------------------------------------------------------------------------
-
             let xScale = d3.scaleLinear()
                 .domain(xDomain)
-                .range([0, width])
-                .nice();
+                .range([0, width]);
 
             let yScale = d3.scaleLinear()
                 .domain(yDomain)
-                .range([height, 0])
-                .nice();
-
-            // Create Color Scale --------------------------------------------------------------------------------------
-
-            let linearColorScale = d3.scaleLinear()
-                .domain([0, data.length])
-                .range(['#572500', '#f68026']);
-
-            let ordinalColorScale = d3.scaleOrdinal(d3.schemeCategory10);
+                .range([height, 0]);
 
             // SVG Creation --------------------------------------------------------------------------------------------
-
             let svg = d3.select('.base--scatter-plot').append('svg')
                 .attr('id', 'chart')
                 .attr('width', w)
@@ -84,30 +76,25 @@
                 .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
             // Create Axis ---------------------------------------------------------------------------------------------
-
             let xTickValue = setTickValues(xDomain[1], 10);
-            let yTickValue = setTickValues(yDomain[1], 6);
+            let yTickValue = setTickValues(yDomain[1], 10);
 
-            let formatXAxis = setFormatAxis(xTickValue);
-            let formatYAxis = setFormatAxis(yTickValue);
+            let formatXAxis = d3.format('d');
+            let formatYAxis = d3.format('d');
 
             let xAxis = d3.axisBottom(xScale).tickSize(0).tickPadding(10).ticks(xTickValue).tickFormat(formatXAxis);
             let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(10).ticks(yTickValue).tickFormat(formatYAxis);
 
             // Create Grid lines ---------------------------------------------------------------------------------------
-
             let yGridLines = d3.axisLeft(yScale)
                 .tickSize(-width, 0, 0)
-                .tickFormat('')
-                .ticks(yTickValue);
+                .tickFormat('');
 
             let xGridLines = d3.axisBottom(xScale)
                 .tickSize(-height, 0, 0)
-                .tickFormat('')
-                .ticks(xTickValue);
+                .tickFormat('');
 
             // Plot Chart ----------------------------------------------------------------------------------------------
-
             plot.call(chart, {
                 data: data,
                 scale: {
@@ -121,6 +108,11 @@
                 gridLines: {
                     x: xGridLines,
                     y: yGridLines
+                },
+                scoreLine: {
+                    green: 25,
+                    yellow: 50,
+                    red: 75
                 }
             });
 
@@ -147,10 +139,6 @@
                 return `hsla(${h}, ${s}, ${l}, ${a})`;
             }
 
-            function setFormatAxis(tickValue) {
-                tickValue === 4 ? d3.format('') : d3.format('d');
-            }
-
             function mapNegativeValuesToZero(object) {
                 for (let [key, value] of entries(object)) {
                     if (Math.sign(value) < 0) object[key] = 0;
@@ -174,6 +162,22 @@
                     .attr('transform', `translate(0, ${height})`)
                     .call(params.gridLines.x)
                     .classed('grid-line', true);
+
+                this.append('g')
+                    .append('line')
+                    .attr('x1', 125)
+                    .attr('y1', 0)
+                    .attr('x2', 0)
+                    .attr('y2', 0)
+                    .style('stroke', 'green');
+
+                this.append('g')
+                    .append('line')
+                    .attr('x1', 125)
+                    .attr('y1', 125)
+                    .attr('x2', 125)
+                    .attr('y2', 0)
+                    .style('stroke', 'green');
 
                 this.selectAll('.point')
                     .data(params.data)

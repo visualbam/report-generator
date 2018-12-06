@@ -6,6 +6,7 @@ import ColumnChart from './components/ColumnChart';
 import ScatterPlot from './components/ScatterPlot';
 import CrossScatterPlot from './components/CrossScatterPlot';
 import PieChart from './components/PieChart';
+import ScatterPlotScoreSummary from "./components/ScatterPlotScoreSummary";
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ export default new Router({
             path: '/scatter-plot',
             name: 'scatter-plot',
             component: ScatterPlot,
+        },
+        {
+            path: '/scatter-plot-score-summary',
+            name: 'scatter-plot-score-summary',
+            component: ScatterPlotScoreSummary,
         },
         {
             path: '/cross-scatter-plot',

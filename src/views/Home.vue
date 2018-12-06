@@ -6,6 +6,8 @@
         <hr>
         <ScatterPlot></ScatterPlot>
         <hr>
+        <ScatterPlotScoreSummary></ScatterPlotScoreSummary>
+        <hr>
         <BarGraph></BarGraph>
         <hr>
         <ColumnChart></ColumnChart>
@@ -18,6 +20,7 @@
     import ColumnChart from '../components/ColumnChart.vue';
     import BarGraph from '../components/BarGraph.vue';
     import ScatterPlot from '../components/ScatterPlot.vue';
+    import ScatterPlotScoreSummary from '../components/ScatterPlotScoreSummary.vue';
     import CrossScatterPlot from '../components/CrossScatterPlot.vue';
     import PieChart from '../components/PieChart';
 
@@ -29,6 +32,7 @@
             BarGraph,
             ColumnChart,
             ScatterPlot,
+            ScatterPlotScoreSummary,
             CrossScatterPlot
         },
     };
